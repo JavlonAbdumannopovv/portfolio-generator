@@ -56,13 +56,13 @@ export const App: React.FC = () => {
       {/* Top Header Navigation */}
       <Header />
 
-      {/* Main Content Sections (Hero, About, Skills, Experience, Projects, Contact) */}
+      {/* Main Content Sections (Hero, About, Experience, Projects, Skills, Contact) */}
       <main className="relative z-10 flex flex-col w-full">
         <Hero />
         <About />
-        <Skills />
         <Experience />
         <Projects />
+        <Skills />
         <Contact />
       </main>
 

@@ -1,18 +1,28 @@
 import React, { useState } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
-import { Layers, ExternalLink, Star } from 'lucide-react';
+import { Layers, ExternalLink, Star, ChevronDown, ChevronUp } from 'lucide-react';
 import { GithubIcon } from './icons/GithubIcon';
 import { ProjectItem } from '../types';
 import { ScrollReveal } from './common/ScrollReveal';
 
 export const Projects: React.FC = () => {
   const { data, t, language } = usePortfolio();
-  const [filter, setFilter] = useState<'all' | 'featured'>('all');
+  const [filter, setFilter] = useState<'all' | 'featured'>('featured');
+  const [visibleCount, setVisibleCount] = useState<number>(10);
 
   const filteredProjects = data.projects.filter((p: ProjectItem) => {
     if (filter === 'featured') return p.featured;
     return true;
   });
+
+  const featuredCount = data.projects.filter((p: ProjectItem) => p.featured).length;
+  const displayedProjects = filteredProjects.slice(0, visibleCount);
+  const hasMore = filteredProjects.length > visibleCount;
+
+  const handleFilterChange = (newFilter: 'all' | 'featured') => {
+    setFilter(newFilter);
+    setVisibleCount(10);
+  };
 
   return (
     <section id="loyihalar" className="py-20 px-5 sm:px-8 lg:px-12 w-full max-w-7xl mx-auto relative">
@@ -39,7 +49,17 @@ export const Projects: React.FC = () => {
             {/* Filter toggle */}
             <div className="flex items-center gap-1.5 p-1 rounded-xl bg-surface-container-high/80 border border-white/5 backdrop-blur-md">
               <button
-                onClick={() => setFilter('all')}
+                onClick={() => handleFilterChange('featured')}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-all ${
+                  filter === 'featured'
+                    ? 'bg-primary-container text-on-primary font-bold shadow-sm'
+                    : 'text-on-surface-variant hover:text-on-surface'
+                }`}
+              >
+                ⭐ {language === 'uz' ? 'Asosiy (Featured)' : language === 'ru' ? 'Избранные' : 'Featured'} ({featuredCount})
+              </button>
+              <button
+                onClick={() => handleFilterChange('all')}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-all ${
                   filter === 'all'
                     ? 'bg-primary-container text-on-primary font-bold shadow-sm'
@@ -48,23 +68,13 @@ export const Projects: React.FC = () => {
               >
                 {language === 'uz' ? 'Barcha loyihalar' : language === 'ru' ? 'Все проекты' : 'All Projects'} ({data.projects.length})
               </button>
-              <button
-                onClick={() => setFilter('featured')}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-all ${
-                  filter === 'featured'
-                    ? 'bg-primary-container text-on-primary font-bold shadow-sm'
-                    : 'text-on-surface-variant hover:text-on-surface'
-                }`}
-              >
-                ⭐ {language === 'uz' ? 'Asosiy (Featured)' : language === 'ru' ? 'Избранные' : 'Featured'}
-              </button>
             </div>
           </div>
         </ScrollReveal>
 
         {/* Projects Grid: 3-column on large screens so 3 projects fill the row with exact alignment */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-          {filteredProjects.map((project, index) => (
+          {displayedProjects.map((project, index) => (
             <ScrollReveal
               key={project.id}
               direction="up"
@@ -150,6 +160,41 @@ export const Projects: React.FC = () => {
             </ScrollReveal>
           ))}
         </div>
+
+        {/* Load More Button if projects count exceeds 10 */}
+        {filteredProjects.length > 10 && (
+          <div className="flex justify-center pt-4">
+            {hasMore ? (
+              <button
+                onClick={() => setVisibleCount((prev) => prev + 10)}
+                className="group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-surface-container-high hover:bg-surface-container-highest text-on-surface hover:text-primary-container font-headline text-sm font-semibold transition-all duration-300 border border-white/10 hover:border-primary-container/40 hover:shadow-neon"
+              >
+                <span>
+                  {language === 'uz'
+                    ? `Ko'proq loyihalarni ko'rish (+${filteredProjects.length - visibleCount})`
+                    : language === 'ru'
+                    ? `Показать больше проектов (+${filteredProjects.length - visibleCount})`
+                    : `Show more projects (+${filteredProjects.length - visibleCount})`}
+                </span>
+                <ChevronDown className="w-4 h-4 text-primary-container transition-transform group-hover:translate-y-1" />
+              </button>
+            ) : (
+              <button
+                onClick={() => setVisibleCount(10)}
+                className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-surface-container hover:bg-surface-container-high text-xs font-mono text-on-surface-variant hover:text-on-surface transition-all border border-white/5"
+              >
+                <span>
+                  {language === 'uz'
+                    ? 'Kamroq ko\'rsatish (10 ta)'
+                    : language === 'ru'
+                    ? 'Свернуть (до 10)'
+                    : 'Show less (10)'}
+                </span>
+                <ChevronUp className="w-3.5 h-3.5 transition-transform group-hover:-translate-y-0.5" />
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );

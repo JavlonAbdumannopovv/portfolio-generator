@@ -13,7 +13,7 @@ export const Header: React.FC = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
-      const sections = ['hero', 'haqimda', 'konikmalar', 'tajriba', 'loyihalar', 'aloqa'];
+      const sections = ['hero', 'haqimda', 'tajriba', 'loyihalar', 'konikmalar', 'aloqa'];
       const current = sections.find((sec) => {
         const el = document.getElementById(sec);
         if (el) {
@@ -32,9 +32,9 @@ export const Header: React.FC = () => {
   const navLinks = [
     { id: 'hero', label: { uz: 'Asosiy', ru: 'Главная', en: 'Home' } },
     { id: 'haqimda', label: { uz: 'Haqimda', ru: 'Обо мне', en: 'About' } },
-    { id: 'konikmalar', label: { uz: "Ko'nikmalar", ru: 'Навыки', en: 'Skills' } },
     { id: 'tajriba', label: { uz: 'Tajriba', ru: 'Опыт', en: 'Experience' } },
     { id: 'loyihalar', label: { uz: 'Loyihalar', ru: 'Проекты', en: 'Projects' } },
+    { id: 'konikmalar', label: { uz: "Ko'nikmalar", ru: 'Навыки', en: 'Skills' } },
     { id: 'aloqa', label: { uz: 'Aloqa', ru: 'Контакты', en: 'Contact' } },
   ];
 
