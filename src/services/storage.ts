@@ -1,8 +1,8 @@
 import { PortfolioData, ContactMessage } from '../types';
 import { INITIAL_PORTFOLIO_DATA } from '../data/initialData';
 
-const DATA_STORAGE_KEY = 'javlon_portfolio_data_v5';
-const INQUIRIES_STORAGE_KEY = 'javlon_portfolio_inquiries_v5';
+const DATA_STORAGE_KEY = 'javlon_portfolio_data_v6';
+const INQUIRIES_STORAGE_KEY = 'javlon_portfolio_inquiries_v6';
 const AUTH_STORAGE_KEY = 'javlon_admin_auth_session';
 
 export const getPortfolioData = (): PortfolioData => {

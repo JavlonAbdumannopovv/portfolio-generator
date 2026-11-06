@@ -146,6 +146,16 @@ export const Contact: React.FC = () => {
                   >
                     LinkedIn
                   </a>
+                  {contact.youtube && (
+                    <a
+                      href={contact.youtube}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-xs font-mono text-rose-400 hover:text-rose-300 transition-colors border border-white/5"
+                    >
+                      YouTube
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

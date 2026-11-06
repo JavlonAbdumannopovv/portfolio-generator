@@ -63,6 +63,7 @@ export interface ContactInfo {
   telegramUsername: string;
   github: string;
   linkedin: string;
+  youtube?: string;
   email: string;
   phone: string;
   location: string;

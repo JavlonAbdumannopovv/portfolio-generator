@@ -1157,6 +1157,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                   </div>
 
                   <div className="flex flex-col gap-1">
+                    <label className="text-[11px] font-mono text-on-surface-variant">YouTube Havola</label>
+                    <input
+                      type="text"
+                      value={contentForm.contact.youtube || ''}
+                      onChange={(e) =>
+                        setContentForm({
+                          ...contentForm,
+                          contact: { ...contentForm.contact, youtube: e.target.value },
+                        })
+                      }
+                      className="px-3 py-2 rounded-xl bg-surface-container text-xs text-on-surface border border-white/5 font-mono"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-1">
                     <label className="text-[11px] font-mono text-on-surface-variant">Email</label>
                     <input
                       type="email"
